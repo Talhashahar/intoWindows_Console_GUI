@@ -1,2 +1,4 @@
 ﻿  Textbox.cpp
-  AMA-Label.vcxproj -> C:\Users\talha\Desktop\AMA-Label\Debug\AMA-Label.exe
+g:\google drive\לימודים\שנה ג\שיטות בהנדסת תוכנה\intowindows_console_gui\textbox.h(30): warning C4018: '<': signed/unsigned mismatch
+g:\google drive\לימודים\שנה ג\שיטות בהנדסת תוכנה\intowindows_console_gui\textbox.cpp(97): warning C4018: '>': signed/unsigned mismatch
+  AMA-Label.vcxproj -> G:\Google Drive\לימודים\שנה ג\שיטות בהנדסת תוכנה\intoWindows_Console_GUI\Debug\AMA-Label.exe

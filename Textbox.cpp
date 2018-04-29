@@ -50,5 +50,57 @@ void Textbox::draw() {
 			}
 		}
 	}
-	
+	MoveCurAndReplaceTxt(1,1,this->value);
 }
+
+void Textbox::MoveCur(int x, int y) {
+	HANDLE out = GetStdHandle(STD_OUTPUT_HANDLE);
+	this->position.X = x;
+	this->position.Y = y;
+	SetConsoleCursorPosition(out, position);
+}
+
+void Textbox::MoveCurAndReplaceTxt(int x, int y, string text) {
+	HANDLE out = GetStdHandle(STD_OUTPUT_HANDLE);
+	position.X = x;
+	position.Y = y;
+	SetConsoleCursorPosition(out, position);
+	cout << text;
+}
+
+void Textbox::HandleEvent(INPUT_RECORD inputRecord, int* counter) {
+	switch (inputRecord.EventType) {
+	case KEY_EVENT:
+		if (!(*counter)) {
+			if (inputRecord.Event.KeyEvent.uChar.AsciiChar >= 32 && inputRecord.Event.KeyEvent.uChar.AsciiChar <= 127) {
+				AddChar(inputRecord.Event.KeyEvent.uChar.AsciiChar);
+			}
+			else if (inputRecord.Event.KeyEvent.uChar.AsciiChar == 8) {
+				DeleteChar();
+			}
+			else if (inputRecord.Event.KeyEvent.uChar.AsciiChar == 13) {
+				MoveCurAndReplaceTxt(1, getPosition().Y + 1, "");
+			}
+		}
+		if ((*counter) == 0) {
+			(*counter)++;
+		}
+		else {
+			(*counter) = 0;
+		}
+	}
+}
+
+void Textbox::AddChar(char ch) {
+	if (_SizeX > value.length()) {
+		value += ch;
+		MoveCurAndReplaceTxt(position.X, position.Y, value);
+	}
+}
+void Textbox::DeleteChar() {						//backspace (no delete button)
+	if (value.length() > 0) {
+		value = value.substr(0, value.size() - 1);
+		cout << '\b' << " " << '\b';						
+	}
+}
+

@@ -26,11 +26,22 @@ public:
 		return position;
 	}
 
+	void setValue(string Newval) {
+		if (Newval.length() < _SizeX - 1) {
+			return;
+		}
+		else {
+			value = Newval.substr(0, _SizeX - 2);
+		}
+	}
+
 
 	void draw();
-
-	void draw(int w, int h);
-
+	void MoveCur(int x, int y);
+	void HandleEvent(INPUT_RECORD inputRecord, int* counter);
+	void AddChar(char ch);
+	void DeleteChar();
+	void MoveCurAndReplaceTxt(int x, int y, string text);
 	~Textbox() {};
 
 
