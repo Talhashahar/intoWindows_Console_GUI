@@ -10,10 +10,9 @@ using namespace std;
 int main(int argc, char** argv) {
 
 	HANDLE in = GetStdHandle(STD_INPUT_HANDLE);
-	Textbox chk({ 0,0 }, "Zibi", 10, 4);
+	Textbox chk({ 4,4 }, "Zibi", 10, 4);
 
-	chk.draw();
-	chk.MoveCur(1, 1);
+	chk.draw1();
 	int counter = 0;
 	while (1) {
 		INPUT_RECORD ir;
@@ -21,8 +20,5 @@ int main(int argc, char** argv) {
 		ReadConsoleInput(in, &ir, 1, &count);
 		chk.HandleEvent(ir, &counter);
 	}
-
-
-
 
 }

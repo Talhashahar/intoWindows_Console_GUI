@@ -1,57 +1,6 @@
 ﻿#include "Textbox.h"
 #include <iostream>
 
-void Textbox::draw() {
-
-	HANDLE out = GetStdHandle(STD_OUTPUT_HANDLE);
-	CONSOLE_SCREEN_BUFFER_INFO info;
-	GetConsoleScreenBufferInfo(out, &info);
-	SetConsoleCursorPosition(out, this->position);
-	//std::cout << value;
-	SetConsoleTextAttribute(out, info.wAttributes);
-	SetConsoleCursorPosition(out, info.dwCursorPosition);
-	for (int y = 0; y < _SizeY; ++y) {				//print the Y Axis
-		for (int x = 0; x < _SizeX; ++x) {			//print the X Axis
-			if (x != 0 && y != 0 && x != _SizeX - 1 && y != _SizeY - 1) {
-				std::cout << " ";						// space
-				continue;
-			}
-			if (y == 0 && x == 0) {
-				std::cout << '\xDA';						// ┌
-			}
-			if ((y == 0 || y == _SizeY -1) && (x != 0 || x != _SizeX - 1 )) {
-				if (y == _SizeY - 1 && x == 0) {
-					std::cout << '\xC0';						// └
-				}
-				else {
-					std::cout << '\xC4';						// ─
-				}
-			}
-			if (y == 0 && x == _SizeX - 1) {
-				std::cout << '\xBF' << endl;						//┐
-			}
-			if (y != 0 && (x == 0 || x == _SizeX -1)) {
-				if (y == _SizeY - 1 && x == _SizeX - 1) {
-					std::cout << '\xD9' << endl;						// ┘
-				}
-				else if (x == _SizeX - 1) {
-					std::cout << ' ' << ' ' << '\xB3' << endl;
-
-					continue;
-				}
-				else if (x == 0 && y != _SizeY - 1) {
-					std::cout << '\xB3';
-				}
-				else {
-					std::cout << '\xC4';						//│
-				}
-				
-
-			}
-		}
-	}
-	MoveCurAndReplaceTxt(1,1,this->value);
-}
 
 void Textbox::MoveCur(int x, int y) {
 	HANDLE out = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -72,14 +21,11 @@ void Textbox::HandleEvent(INPUT_RECORD inputRecord, int* counter) {
 	switch (inputRecord.EventType) {
 	case KEY_EVENT:
 		if (!(*counter)) {
-			if (inputRecord.Event.KeyEvent.uChar.AsciiChar >= 32 && inputRecord.Event.KeyEvent.uChar.AsciiChar <= 127) {
+			if (inputRecord.Event.KeyEvent.uChar.AsciiChar >= 32 && inputRecord.Event.KeyEvent.uChar.AsciiChar <= 127) {		//all charts in english and numbers
 				AddChar(inputRecord.Event.KeyEvent.uChar.AsciiChar);
 			}
-			else if (inputRecord.Event.KeyEvent.uChar.AsciiChar == 8) {
+			else if (inputRecord.Event.KeyEvent.uChar.AsciiChar == 8) {															//backsapce
 				DeleteChar();
-			}
-			else if (inputRecord.Event.KeyEvent.uChar.AsciiChar == 13) {
-				MoveCurAndReplaceTxt(1, getPosition().Y + 1, "");
 			}
 		}
 		if ((*counter) == 0) {
@@ -92,9 +38,20 @@ void Textbox::HandleEvent(INPUT_RECORD inputRecord, int* counter) {
 }
 
 void Textbox::AddChar(char ch) {
-	if (_SizeX > value.length()) {
-		value += ch;
-		MoveCurAndReplaceTxt(position.X, position.Y, value);
+	stringstream ss;
+	string temp;
+	if (_SizeX > value.length() +2 ) {					//append the char to string and replace the text on specific cords
+		if (ch == ' ') {
+			temp = value + " ";
+
+			MoveCurAndReplaceTxt(position.X, position.Y, temp);
+		}
+		else {
+			ss << ch;
+			ss >> temp;
+			value += temp;
+			MoveCurAndReplaceTxt(position.X, position.Y, value);
+		}	
 	}
 }
 void Textbox::DeleteChar() {						//backspace (no delete button)
@@ -102,5 +59,54 @@ void Textbox::DeleteChar() {						//backspace (no delete button)
 		value = value.substr(0, value.size() - 1);
 		cout << '\b' << " " << '\b';						
 	}
+}
+
+
+void Textbox::draw() {
+	HANDLE out = GetStdHandle(STD_OUTPUT_HANDLE);
+	CONSOLE_SCREEN_BUFFER_INFO info;
+
+	//int x = position.X;
+	//int y = position.Y;
+	int YAxis = 0;
+	int x;
+	MoveCur(position.X, position.Y);
+	for (x = 0; x < _SizeX; ++x) {
+		if (x == 0) {
+			std::cout << '\xDA';						// ┌
+			continue;
+		}
+		if (x != _SizeX - 1) {
+			std::cout << '\xC4';						// ─
+			continue;
+		}
+		if (x == _SizeX - 1) {
+			std::cout << '\xBF';						//┐
+		}
+	}
+	MoveCur(position.X, position.Y+1);
+	for (x = 0; x < _SizeX; ++x) {
+		if (x == 0 || x == _SizeX -1) {
+			std::cout << '\xB3';					//|
+		}
+		else {
+			std::cout << ' ';						//space
+		}
+	}
+	MoveCur(position.X, position.Y + 1);	
+	for (x = 0; x < _SizeX; ++x) {
+		if (x == 0) {
+			std::cout << '\xC0';						// └
+			continue;
+		}
+		if (x != _SizeX - 1) {
+			std::cout << '\xC4';						// ─
+			continue;
+		}
+		if (x == _SizeX - 1) {
+			std::cout << '\xD9' << endl;						// ┘
+		}
+	}
+	MoveCurAndReplaceTxt(position.X+1, position.Y -1, value);
 }
 
