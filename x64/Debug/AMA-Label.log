@@ -1,0 +1,3 @@
+﻿  Checklist.cpp
+g:\google drive\לימודים\שנה ג\שיטות בהנדסת תוכנה\intowindows_console_gui\checklist.cpp(51): warning C4805: '==': unsafe mix of type 'BOOL' and type 'bool' in operation
+  AMA-Label.vcxproj -> G:\Google Drive\לימודים\שנה ג\שיטות בהנדסת תוכנה\intoWindows_Console_GUI\x64\Debug\AMA-Label.exe

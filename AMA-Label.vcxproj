@@ -115,11 +115,15 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Checkbox.cpp" />
+    <ClCompile Include="Checklist.cpp" />
     <ClCompile Include="Label.cpp" />
     <ClCompile Include="Source.cpp" />
     <ClCompile Include="Textbox.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Checkbox.h" />
+    <ClInclude Include="Checklist.h" />
     <ClInclude Include="Label.h" />
     <ClInclude Include="Textbox.h" />
   </ItemGroup>

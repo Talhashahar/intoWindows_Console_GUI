@@ -1,4 +1,2 @@
-﻿  Textbox.cpp
-g:\google drive\לימודים\שנה ג\שיטות בהנדסת תוכנה\intowindows_console_gui\textbox.h(30): warning C4018: '<': signed/unsigned mismatch
-g:\google drive\לימודים\שנה ג\שיטות בהנדסת תוכנה\intowindows_console_gui\textbox.cpp(97): warning C4018: '>': signed/unsigned mismatch
-  AMA-Label.vcxproj -> G:\Google Drive\לימודים\שנה ג\שיטות בהנדסת תוכנה\intoWindows_Console_GUI\Debug\AMA-Label.exe
+﻿  Checklist.cpp
+g:\google drive\לימודים\שנה ג\שיטות בהנדסת תוכנה\intowindows_console_gui\checklist.cpp : fatal error C1041: cannot open program database 'G:\Google Drive\לימודים\שנה ג\שיטות בהנדסת תוכנה\intoWindows_Console_GUI\Debug\vc141.pdb'; if multiple CL.EXE write to the same .PDB file, please use /FS
